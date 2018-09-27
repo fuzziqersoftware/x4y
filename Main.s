@@ -138,7 +138,7 @@ _choose_file_line__not_first_line:
   xor rax, rax  # current line number
 
 _choose_file_line__select_line__count_next_byte:
-  cmp byte ptr[rdi], 0x0A  # newline
+  cmp byte ptr [rdi], 0x0A  # newline
   jne _choose_file_line__select_line__not_newline
   inc rax  # increment current line number; if it matches rdx, we're done
   cmp rax, rdx
@@ -208,7 +208,7 @@ _main:
   push rbp
   mov rbp, rsp
 
-  # load the startups-fake file
+  # load startups-fake.txt
   mov dword ptr [rsp + 56], 0x72617473
   mov dword ptr [rsp + 60], 0x73707574
   mov dword ptr [rsp + 64], 0x6B61662D
@@ -219,7 +219,7 @@ _main:
   mov [rbp + 8], rdi
   mov [rbp + 16], rsi
 
-  # load the startups-real file
+  # load startups-real.txt
   mov dword ptr [rsp + 56], 0x72617473
   mov dword ptr [rsp + 60], 0x73707574
   mov dword ptr [rsp + 64], 0x6165722D
@@ -230,7 +230,7 @@ _main:
   mov [rbp + 24], rdi
   mov [rbp + 32], rsi
 
-  # load the populations file
+  # load populations.txt
   mov dword ptr [rsp + 56], 0x75706F70
   mov dword ptr [rsp + 60], 0x6974616C
   mov dword ptr [rsp + 64], 0x2E736E6F
@@ -268,7 +268,7 @@ _main:
   mov [rbp + 72], rdi
 
   # compute the length of the string
-  mov qword ptr [rbp + 80], 14  # = 1 + strlen("X: it\'s Y for Z!" without the X, Y, or Z)
+  mov qword ptr [rbp + 80], 14  # = len("X: it's Y for Z!\0" without X, Y, Z)
   call _strlen_newline
   mov [rbp + 80], rdi
   mov rdi, [rbp + 56]
@@ -332,13 +332,3 @@ _error_exit_misaligned:
 _error_exit:
   mov rdi, 1
   jmp _exit
-
-
-# rbp + 8  = startups.txt data
-# rbp + 16 = startups.txt size
-# rbp + 24 = populations.txt data
-# rbp + 32 = populations.txt size
-# rbp + 40 = random1, target startup name ptr
-# rbp + 48 = random2, source startup name ptr
-# rbp + 56 = random3, population name ptr
-# rbp + 64 = result string length including \0
