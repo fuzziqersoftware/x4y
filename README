@@ -1,0 +1,14 @@
+x-for-y: a derived startup name generator
+
+Frequently asked questions:
+  What does this thing even do?
+    It generates phrases of the form "X: it's Y for Z!", mocking tech companies
+    that position themselves as such.
+  Why?
+    Because Silicon Valley is ridiculous.
+  This seems dumb.
+    You are correct.
+  Why is this written in assembly?
+    Because it was the best tool for the job, obviously.
+
+Enjoy. Or don't. The choice is yours.
